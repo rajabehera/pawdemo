@@ -1,11 +1,15 @@
+
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
-import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 export default defineConfig(() => {
   return {
+    // Required for GitHub Pages project deployments
+    base: '/pawdemo/',
+
     plugins: [
       react(),
       tailwindcss(),
@@ -21,8 +25,8 @@ export default defineConfig(() => {
       rollupOptions: {
         output: {
           manualChunks: {
-            "vendor-react": ["react", "react-dom"],
-            "vendor-lucide": ["lucide-react"],
+            'vendor-react': ['react', 'react-dom'],
+            'vendor-lucide': ['lucide-react'],
           },
         },
       },
