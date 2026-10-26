@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Remix: Pawwcious",
+  "description": "Premium mobile-first ecommerce web app for elite pet care and luxury wellness.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with roles and basic information.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Unified Firebase auth status UID" },
+        "name": { "type": "string", "description": "Full name of the customer or admin" },
+        "email": { "type": "string", "description": "Electronic mail address" },
+        "role": { "type": "string", "enum": ["admin", "customer"], "description": "Access control role" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of user sign-up" }
+      },
+      "required": ["userId", "email"]
+    },
+    "Product": {
+      "title": "Product Details",
+      "description": "Premium wellness solutions offered by Pawwcious.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID matching slug" },
+        "name": { "type": "string", "description": "Product name" },
+        "tagline": { "type": "string", "description": "Slick single sentence hook line" },
+        "description": { "type": "string", "description": "Detailed multi-paragraph description" },
+        "category": { "type": "string", "description": "Category slug grouping" },
+        "price": { "type": "number", "description": "Active price in INR" },
+        "originalPrice": { "type": "number", "description": "MRP in INR before bargain" },
+        "stock": { "type": "number", "description": "Remaining stock units" },
+        "rating": { "type": "number", "description": "Average review stars" },
+        "reviewCount": { "type": "number", "description": "Total rating quantity" },
+        "imageUrl": { "type": "string", "description": "Asset source URL or generated photo url" },
+        "benefits": { "type": "array", "description": "Array of bullet text strings" },
+        "usage": { "type": "array", "description": "Array of steps text strings" },
+        "isBestSeller": { "type": "boolean", "description": "Highlight tag condition" },
+        "sizeVariants": { "type": "array", "description": "List of available sizes (e.g. 100ml, 500ml, 1kg)" }
+      },
+      "required": ["id", "name", "price", "imageUrl", "category"]
+    },
+    "Banner": {
+      "title": "Promo Banner",
+      "description": "Promotional billboard for standard campaigns.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Campaign document id" },
+        "title": { "type": "string", "description": "Big primary font tagline" },
+        "subtitle": { "type": "string", "description": "Subtle subtitle details" },
+        "imageUrl": { "type": "string", "description": "Billboard banner image" },
+        "ctaLink": { "type": "string", "description": "Navigation link path inside app" },
+        "ctaText": { "type": "string", "description": "Primary button action term" }
+      },
+      "required": ["id", "title", "imageUrl"]
+    },
+    "Blog": {
+      "title": "Pet Care Guide Blog",
+      "description": "High value guides and wellness literature.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "SEO friendly unique slug" },
+        "title": { "type": "string", "description": "Headline text" },
+        "summary": { "type": "string", "description": "Short social preview snippet" },
+        "content": { "type": "string", "description": "Full rich markdown content block" },
+        "author": { "type": "string", "description": "Pawwcious scientific/team expert" },
+        "imageUrl": { "type": "string", "description": "Cover graphic source" },
+        "category": { "type": "string", "description": "Tag or category (e.g., Grooming, Nutrition)" },
+        "readTime": { "type": "string", "description": "Duration guess e.g. 5 min read" },
+        "createdAt": { "type": "string", "description": "Publication date" }
+      },
+      "required": ["id", "title", "content", "imageUrl"]
+    },
+    "Order": {
+      "title": "Checkout Order",
+      "description": "Client order tracking records.",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string", "description": "Pawwcious custom invoice reference ID" },
+        "userId": { "type": "string", "description": "Refers to User Profile userId" },
+        "items": { "type": "array", "description": "List of items purchased" },
+        "totalAmount": { "type": "number", "description": "Grand total paid in INR" },
+        "subtotal": { "type": "number", "description": "Item totals" },
+        "discount": { "type": "number", "description": "Subtract amount from coupon usage" },
+        "shippingFee": { "type": "number", "description": "Logistic flat rate or free" },
+        "gstAmount": { "type": "number", "description": "Calculated 18% GST" },
+        "shippingDetails": { "type": "object", "description": "Name, Address, Pin Code, Contact Info" },
+        "paymentMethod": { "type": "string", "enum": ["COD", "Online"], "description": "Checkout choice" },
+        "paymentStatus": { "type": "string", "enum": ["Pending", "Paid", "Failed"], "description": "Online payment state" },
+        "paymentId": { "type": "string", "description": "Razorpay or Gateway transaction ID" },
+        "shippingStatus": { "type": "string", "enum": ["Order Received", "AWB Generated", "In Transit", "Delivered"], "description": "Shiprocket tracking state" },
+        "awbNumber": { "type": "string", "description": "Generated Shiprocket AWB ID" },
+        "estimatedDelivery": { "type": "string", "description": "Estimated day of delivery prediction" },
+        "createdAt": { "type": "string", "description": "Order creation date" }
+      },
+      "required": ["orderId", "userId", "items", "totalAmount"]
+    },
+    "Coupon": {
+      "title": "Promo Coupon",
+      "description": "Merchant marketing rebate code.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "description": "Capital alphanumeric code" },
+        "discountPercent": { "type": "number", "description": "Percentage saving value" },
+        "maxDiscount": { "type": "number", "description": "Cap value" },
+        "minCartValue": { "type": "number", "description": "Threshold before applying" },
+        "active": { "type": "boolean", "description": "Status toggle" }
+      },
+      "required": ["code", "discountPercent", "active"]
+    },
+    "Testimonial": {
+      "title": "User Testimonial",
+      "description": "Reviews from real modern Indian pet parents.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Testimonial ID" },
+        "name": { "type": "string", "description": "Customer standard name" },
+        "petName": { "type": "string", "description": "Target pet name & breed" },
+        "rating": { "type": "number", "description": "Rating score out of 5" },
+        "text": { "type": "string", "description": "Review text details" },
+        "avatarUrl": { "type": "string", "description": "Display avatar url" }
+      },
+      "required": ["id", "name", "rating", "text"]
+    },
+    "Category": {
+      "title": "Product Category",
+      "description": "Categories for shopping navigation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique slug identifier" },
+        "name": { "type": "string", "description": "Customer readable Title" },
+        "iconName": { "type": "string", "description": "Lucide icon identification" },
+        "description": { "type": "string", "description": "Category brief summary" }
+      },
+      "required": ["id", "name"]
+    },
+    "Newsletter": {
+      "title": "Newsletter Subscription",
+      "description": "Subscribed electronic mail addresses.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "source": { "type": "string" }
+      },
+      "required": ["email"]
+    },
+    "SpooledEmail": {
+      "title": "Spooled Email Outbox",
+      "description": "Simulated or sent outbox emails from newsletters and notifications.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "to": { "type": "string" },
+        "subject": { "type": "string" },
+        "body": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "status": { "type": "string" },
+        "type": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "to", "subject", "body"]
+    },
+    "EmailTemplate": {
+      "title": "Email Template Config",
+      "description": "Simulated responsive HTML email templates customizable by administrators.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subject": { "type": "string" },
+        "html": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "subject", "html"]
+    },
+    "ReviewReel": {
+      "title": "Review Reel",
+      "description": "Dynamic premium customer review reels curated and managed by administrators.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "authorName": { "type": "string" },
+        "petName": { "type": "string" },
+        "rating": { "type": "number" },
+        "caption": { "type": "string" },
+        "location": { "type": "string" },
+        "views": { "type": "string" },
+        "likes": { "type": "number" },
+        "featuredProductId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "videoUrl", "authorName", "caption"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Customer or Administrator profile record."
+    },
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "Catalog of Premium Pet Care and Wellness products."
+    },
+    "banners/{bannerId}": {
+      "schema": "Banner",
+      "description": "Promotional homepage billboards."
+    },
+    "blogs/{blogId}": {
+      "schema": "Blog",
+      "description": "Aesthetic pet care tips, articles, and science."
+    },
+    "orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer checkout checkout records with logistics."
+    },
+    "coupons/{couponId}": {
+      "schema": "Coupon",
+      "description": "Campaign discount coupon codes."
+    },
+    "testimonials/{testimonialId}": {
+      "schema": "Testimonial",
+      "description": "Modern user review quotes."
+    },
+    "categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Grooming, food, and gadget separation."
+    },
+    "newsletters/{newsletterId}": {
+      "schema": "Newsletter",
+      "description": "VIP Pawwcious Circle newsletter subscriptions."
+    },
+    "spooled_emails/{emailId}": {
+      "schema": "SpooledEmail",
+      "description": "Spooled newsletter/delivery emails in VIP Pawwcious Circle outbox."
+    },
+    "email_templates/{templateId}": {
+      "schema": "EmailTemplate",
+      "description": "Customizable HTML responsive templates for notifications and campaigns."
+    },
+    "review_reels/{reelId}": {
+      "schema": "ReviewReel",
+      "description": "Real vertical video reviews and high-quality testimonials."
+    }
+  }
+}

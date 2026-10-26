@@ -1,0 +1,10 @@
+{
+  "projectId": "pawwcious-store",
+  "appId": "1:648833148816:web:11fbf2d7c9f7fbd7de7515",
+  "apiKey": "AIzaSyCBB2XIFs_5fIoj7bvqpQwQi1pLkR6Jejs",
+  "authDomain": "pawwcious-store.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "pawwcious-store.firebasestorage.app",
+  "messagingSenderId": "648833148816",
+  "measurementId": "G-DT7V65V5BC"
+}

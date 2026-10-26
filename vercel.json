@@ -1,0 +1,107 @@
+{
+  "version": 2,
+  "redirects": [
+    { "source": "/product-category/:path*", "destination": "/product", "permanent": true },
+    { "source": "/product-tag/:path*",      "destination": "/product", "permanent": true },
+    { "source": "/category/:path*",         "destination": "/product", "permanent": true },
+    { "source": "/collections/:path*",      "destination": "/product", "permanent": true },
+    { "source": "/item/:path*",             "destination": "/product", "permanent": true }
+    ],
+    "buildCommand": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "outputDirectory": "dist",
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "dist"
+            }
+        },
+        {
+            "src": "dist/server.cjs",
+            "use": "@vercel/node",
+            "config": {
+                "maxDuration": 10
+            }
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Cross-Origin-Opener-Policy",
+                    "value": "same-origin-allow-popups"
+                },
+                {
+                    "key": "Cross-Origin-Embedder-Policy",
+                    "value": "unsafe-none"
+                }
+            ]
+        },
+        {
+            "source": "/assets/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/images/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=2592000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/reels_thumbnails/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=2592000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/video/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=2592000, immutable"
+                }
+            ]
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/dist/server.cjs"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/dist/$1"
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/index.ts"
+        },
+        {
+            "source": "/robots.txt",
+            "destination": "/api/index.ts"
+        },
+        {
+            "source": "/sitemap.xml",
+            "destination": "/api/index.ts"
+        },
+        {
+            "source": "/((?!api/|assets/|images/|video/|reels_thumbnails/|robots\\.txt|sitemap\\.xml|.*\\.[a-zA-Z0-9]+$).*)",
+            "destination": "/index.html"
+        }
+    ]
+}
